@@ -16,6 +16,10 @@ export const settingToggleAllowVote = async () => {
           } else {
                await redis.hset("setting", "isVotingAllowed", "true")
           }
+
+          // trigger pusher
+          const pusher = await getPusherClient();
+          pusher.trigger("pemilose", "pemilolot", "");
           
           // trigger pusher
           const pusher = await getPusherClient();
